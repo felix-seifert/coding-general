@@ -1,5 +1,6 @@
 package com.felixseifert.codinggeneral;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -17,22 +18,26 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class PossibilitiesToCombineTest {
 
     private static Stream<Arguments> getArgumentsStream() {
+        // Key: length of the list which should be generated, value: expected return value
         Map<Long, Long> lengthAndResults = new HashMap<>();
         lengthAndResults.put(10L, 4L);
         lengthAndResults.put(11L, 5L);
         lengthAndResults.put(12L,6L);
         lengthAndResults.put(50L,110L);
         lengthAndResults.put(100L,450L);
+        // Generate list from 0 to 10 with the taget value of 10
         return generateListStreamWithTarget(lengthAndResults, 0, 10, 10);
     }
 
-    @ParameterizedTest
+    @DisplayName("Test possibilitiesToCombine with provided lists and target value")
+    @ParameterizedTest(name = "Expected result: {2}")
     @MethodSource("getArgumentsStream")
     public void possibilitiesToCombineTest(List<Integer> list, int targetValue, long result) {
         assertEquals(result, PossibilitiesToCombine.possibilitiesToCombine(list, targetValue));
     }
 
-    @ParameterizedTest
+    @DisplayName("Test possibilitiesToCombineImproved with provided lists and target value")
+    @ParameterizedTest(name = "Expected result: {2}")
     @MethodSource("getArgumentsStream")
     public void possibilitiesToCombineImprovedTest(List<Integer> list, int targetValue, long result) {
         assertEquals(result, PossibilitiesToCombine.possibilitiesToCombineImproved(list, targetValue));
